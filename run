@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# script to compile all .c files in the present directory, and then
+# run mainserver.out and mainclient.out in new terminal windows
+# https://unix.stackexchange.com/questions/137066/shell-script-to-compile-c-files
+# USAGE:
+#   1. make this file executable: chmod u+x run
+#   2. Execute by double clicking the run file, or ./run in terminal
+
+TEXT1="Compiling:"
+TEXT2="into"
+
+#for all files with a .c extension in pwd
+for i in *.c
+do
+    # print out what you are about to compile
+    echo "$TEXT1 $i $TEXT2 ${i%.c}.out"
+    # compile that specific file with args -g3 -o3 -o
+    gcc "$i" -o "${i%.c}.out"
+done
+
+
+
+
+# open a new terminal window of a certain size, and at a certain location on the screen
+#see gnome-terminal --help for more details
+# run the command specified after -- in the new terminal
+# https://askubuntu.com/questions/46627/how-can-i-make-a-script-that-opens-terminal-windows-and-executes-commands-in-the
+# https://askubuntu.com/questions/516234/why-does-gnome-terminal-open-in-a-strange-place
+printf "\nOpening the Master Server..."
+gnome-terminal --geometry 80x40+0+0 -- ./mainserver.out
+printf "\nOpening the Main Client...\n"
+gnome-terminal --geometry 80x24+660+220 -- ./mainclient.out
+
+sleep(5);
